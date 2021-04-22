@@ -1,5 +1,9 @@
 var express = require('express');
-var router = express.Router();
+var router  = express.Router();
+
+var mongoose = require('mongoose');
+var User     = require('../models/User');
+var db       = mongoose.connection;
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
@@ -49,8 +53,33 @@ router.get('/:id', (req, res) => {
       res.status(404).send('Lo siento, el item no se ha encontrado!');
 });
 
+/* GET del listado de usuarios ordenado por fecha de creación */
+
+router.get('/', ( req, res, next ) => {
+  User.find().sort('-creationdate').exec(( err, users ) => {
+    if(err) res.status(500).send(err);
+    else res.status(200).json(users);
+  });
+});
+
+/*GET  de un unico usuario oor su ID */
+
+router.get('/:id', ( req, res, next) => {
+  User.findById(req.params.id, ( err, userinfo ) => {
+    if(err) res.status(500).send(err);
+    else res.status(200).json(userinfo);;
+  });
+});
+
 /** POST de un nuevo usuario
  */
+
+router.post('/', ( req, res, next) => {
+  User.create(req.body, ( err, userinfo ) => {
+    if(err) res.status(500).send(err);
+    else res.sendStatus(200);
+  })
+})
 
 router.post('/', (req, res) => {
 
