@@ -2,3 +2,6 @@
 /bin
 /node_modules
 /routes
+
+#misc
+.env

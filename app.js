@@ -8,6 +8,17 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+var mongoose = require('mongoose');
+
+require('dotenv').config();
+
+mongoose.set('useCreateIndex', true);
+
+mongoose.connect(process.env.DB_URI,
+{ useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => console.log('mymerndb connection successful'))
+.catch((err) => console.error( err ));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,5 +48,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;
