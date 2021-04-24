@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
-var Post   = require('../models/Post');
+var Post   = require('../models/Post.js');
 
 var bcrypt = require('bcryptjs');
 
@@ -14,7 +14,7 @@ var UserSchema = new Schema({
     email: { type:String, required:true },
     creationdate: { type: Date, default: Date.now },
     role: { type:String, enum: ['admin', 'subscriber'], default: 'subscriber'},
-    posts: [{ type: Schema.ObjectId, ref: Post, default: null }]
+    posts: [{ type: Schema.ObjectId, ref: 'Post', default: null }]
 
 });
 
@@ -42,4 +42,4 @@ UserSchema.methods.comparePasswords = function( candidatePassword, cb ){
     });
 };
 
-module.exports = moongose.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);
