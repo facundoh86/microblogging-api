@@ -8,6 +8,7 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var postsRouter = require('./routes/posts');
 
 var app = express();
 var mongoose = require('mongoose');
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 app.use(cors());
 app.use(bodyParser.json({ limit:'50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
